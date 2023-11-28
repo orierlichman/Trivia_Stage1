@@ -55,6 +55,27 @@ CREATE TABLE [Questions](
 );
 GO
 
-SELECT * FROM Players
+
+INSERT INTO [Ranks] ([RankStatus]) VALUES ('Manager');
+INSERT INTO [Ranks] ([RankStatus]) VALUES ('Maestro');
+INSERT INTO [Ranks] ([RankStatus]) VALUES ('Rookie');
+
+INSERT INTO [Subjects] ([SubjectName]) VALUES ('Sport');
+INSERT INTO [Subjects] ([SubjectName]) VALUES ('Politics');
+INSERT INTO [Subjects] ([SubjectName]) VALUES ('History');
+INSERT INTO [Subjects] ([SubjectName]) VALUES ('Science');
+INSERT INTO [Subjects] ([SubjectName]) VALUES ('Ramon HighSchool');
+
+INSERT INTO [QuestionsStatus] ([StatusName]) VALUES ('Pending');
+INSERT INTO [QuestionsStatus] ([StatusName]) VALUES ('Accepted');
+INSERT INTO [QuestionsStatus] ([StatusName]) VALUES ('Not Accepted');
+
+INSERT INTO [Players] ([Name], [Email], [Password], [Score], [RankId], [NumOfQuestions]) VALUES ('Ofer', 'Ofer123@Gmail.com', 'Ofer123', 0, 1, 5);
+
+--INSERT INTO [Questions] ([Question], [SubjectId], [StatusId], [WriterId], [CorrectAnswer], [WrongAnswer1], [WrongAnswer2], [WrongAnswer3])
+--VALUES ('What shirt number does Cristiano Ronaldo wears ?', 1, 1, 1, '7', '10', '11', '20');
+
+
+SELECT * FROM Questions
 
 
