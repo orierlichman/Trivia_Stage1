@@ -88,3 +88,4 @@ VALUES ('Who is the best teacher in school ?', 5, 1, 1, 'Ofer Zadikario', 'Anat 
 SELECT * FROM Questions
 
 
+--scaffold-DbContext "Server = LAB2-10\SQLEXPRESS;Initial Catalog=TriviaGames;Integrated Security=True;Persist Security Info=False;Pooling=False;Multiple Active Result Sets=False;Encrypt=False;Trust Server Certificate=False;Command Timeout=0;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context TriviaGamesDbContext -DataAnnotations -force
