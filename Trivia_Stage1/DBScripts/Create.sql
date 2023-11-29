@@ -44,16 +44,18 @@ CREATE TABLE [Questions](
 	[SubjectId] INT NOT NULL,
 	[StatusId] INT NOT NULL,
 	[WriterId] INT NOT NULL,
-	[CorrectAnswer] NCHAR NOT NULL,
-	[WrongAnswer1] NCHAR NOT NULL,
-	[WrongAnswer2] NCHAR NOT NULL,
-	[WrongAnswer3] NCHAR NOT NULL,
+	[CorrectAnswer] NCHAR (150) NOT NULL,
+	[WrongAnswer1] NCHAR (150) NOT NULL,
+	[WrongAnswer2] NCHAR (150) NOT NULL,
+	[WrongAnswer3] NCHAR (150) NOT NULL,
 	CONSTRAINT [PK_Questions] PRIMARY KEY CLUSTERED ([QuestionId] ASC),
 	CONSTRAINT [FK_QuestionSubjcet] FOREIGN KEY ([SubjectId]) REFERENCES [Subjects] ([SubjectId]),
 	CONSTRAINT [FK_QuestionStatus] FOREIGN KEY ([StatusId]) REFERENCES [QuestionsStatus] ([QuestionStatusId]),
 	CONSTRAINT [FK_QuestionWriter] FOREIGN KEY ([WriterId]) REFERENCES [Players] ([PlayerId])
 );
 GO
+
+DROP TABLE Questions
 
 
 INSERT INTO [Ranks] ([RankStatus]) VALUES ('Manager');
@@ -72,9 +74,16 @@ INSERT INTO [QuestionsStatus] ([StatusName]) VALUES ('Not Accepted');
 
 INSERT INTO [Players] ([Name], [Email], [Password], [Score], [RankId], [NumOfQuestions]) VALUES ('Ofer', 'Ofer123@Gmail.com', 'Ofer123', 0, 1, 5);
 
---INSERT INTO [Questions] ([Question], [SubjectId], [StatusId], [WriterId], [CorrectAnswer], [WrongAnswer1], [WrongAnswer2], [WrongAnswer3])
---VALUES ('What shirt number does Cristiano Ronaldo wears ?', 1, 1, 1, '7', '10', '11', '20');
-
+INSERT INTO [Questions] ([Question], [SubjectId], [StatusId], [WriterId], [CorrectAnswer], [WrongAnswer1], [WrongAnswer2], [WrongAnswer3])
+VALUES ('What shirt number does Cristiano Ronaldo wears ?', 1, 1, 1, '7', '4', '11', '20');
+INSERT INTO [Questions] ([Question], [SubjectId], [StatusId], [WriterId], [CorrectAnswer], [WrongAnswer1], [WrongAnswer2], [WrongAnswer3])
+VALUES ('Who is the Prime Minister of Israel ?', 2, 1, 1, 'Binyamin Nethanyahu', 'Ofer Zadikario', 'Naftali Benet', 'Hanna Dalmadigo');
+INSERT INTO [Questions] ([Question], [SubjectId], [StatusId], [WriterId], [CorrectAnswer], [WrongAnswer1], [WrongAnswer2], [WrongAnswer3])
+VALUES ('When did the Holocaust ended ?', 3, 1, 1, '1945', '1941', '1933', '2006');
+INSERT INTO [Questions] ([Question], [SubjectId], [StatusId], [WriterId], [CorrectAnswer], [WrongAnswer1], [WrongAnswer2], [WrongAnswer3])
+VALUES ('What is the boiling temprature of H2O ?', 4, 1, 1, '100', '95', '105', '110');
+INSERT INTO [Questions] ([Question], [SubjectId], [StatusId], [WriterId], [CorrectAnswer], [WrongAnswer1], [WrongAnswer2], [WrongAnswer3])
+VALUES ('Who is the best teacher in school ?', 5, 1, 1, 'Ofer Zadikario', 'Anat Bracha', 'Tali Shulk', 'Yoav Ben Aroya');
 
 SELECT * FROM Questions
 
