@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Trivia_Stage1.Models;
 
 namespace Trivia_Stage1.UI
 {
@@ -13,7 +14,7 @@ namespace Trivia_Stage1.UI
 
         //Place here any state you would like to keep during the app life time
         //For example, player login details...
-
+        private Player currentPlayer;
 
         //Implememnt interface here
         public bool ShowLogin()
@@ -27,12 +28,13 @@ namespace Trivia_Stage1.UI
             //Logout user if anyone is logged in!
             //A reference to the logged in user should be stored as a member variable
             //in this class! Example:
-            //this.currentyPLayer == null
+            //
+            this.currentPlayer = null;
 
             //Loop through inputs until a user/player is created or 
             //user choose to go back to menu
             char c = ' ';
-            while (c != 'B' && c != 'b' /*&& this.currentyPLayer == null*/)
+            while (c != 'B' && c != 'b' && this.currentPlayer == null)
             {
                 //Clear screen
                 CleareAndTtile("Signup");
@@ -63,19 +65,19 @@ namespace Trivia_Stage1.UI
 
 
                 Console.WriteLine("Connecting to Server...");
-                /* Create instance of Business Logic and call the signup method
-                 * For example:
+                 //Create instance of Business Logic and call the signup method
+                 //For example:
                 try
                 {
-                    TriviaDBContext db = new TriviaDBContext();
-                    this.currentyPLayer = db.Signup(email, password, name);
+                    TriviaGamesDbContext db = new TriviaGamesDbContext();
+                    this.currentPlayer = db.Signup(email, password, name);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Failed to signup! Email may already exist in DB!");
                 }
                 
-                */
+                
 
                 //Provide a proper message for example:
                 Console.WriteLine("Press (B)ack to go back or any other key to signup again...");
@@ -83,7 +85,7 @@ namespace Trivia_Stage1.UI
                 c = Console.ReadKey(true).KeyChar;
             }
             //return true if signup suceeded!
-            return (false);
+            return (this.currentPlayer != null);
         }
 
         public void ShowAddQuestion()
