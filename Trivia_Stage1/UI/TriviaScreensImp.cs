@@ -133,6 +133,30 @@ namespace Trivia_Stage1.UI
 
         public void ShowAddQuestion()
         {
+            TriviaGamesDbContext db = new TriviaGamesDbContext();
+            bool A = db.AddEligible(this.currentPlayer);
+            if (A == false)
+            {
+                Console.WriteLine("You are not eligible to add a question !!");
+            }
+            else
+            {
+                Console.WriteLine("Choose question subject" + "\n");
+                db.ShowSubjects();
+                int S = int.Parse(Console.ReadLine());
+                Console.WriteLine("Enter your question");
+                string Q = Console.ReadLine();
+                Console.WriteLine("Enter the correct answer");
+                string cAnswer = Console.ReadLine();
+                Console.WriteLine("Enter wrong answer number 1");
+                string wAnswer1 = Console.ReadLine();
+                Console.WriteLine("Enter wrong answer number 2");
+                string wAnswer2 = Console.ReadLine();
+                Console.WriteLine("Enter wrong answer number 3");
+                string wAnswer3 = Console.ReadLine();
+            }
+
+
             Console.WriteLine("Not implemented yet! Press any key to continue...");
             Console.ReadKey(true);
         }

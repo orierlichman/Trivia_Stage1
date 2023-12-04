@@ -25,8 +25,30 @@ public partial class TriviaGamesDbContext : DbContext
 
     public Player Login(string email, string password)
     {
-        Player p = Players.Where(pp => pp.Email == email && pp.Password == password).FirstOrDefault();
+        Player? p = Players.Where(pp => pp.Email == email && pp.Password == password).Include(pp => pp.Rank).FirstOrDefault();
         return p;
+    }
+
+
+    public bool AddEligible (Player p)
+    {
+        if (p.RankId == 1)
+        {
+            return true;
+        }
+        else if (p.Score == 100)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void ShowSubjects()
+    {
+        foreach (Subject s in this.Subjects)
+        {
+            Console.WriteLine("Enter " + s.SubjectId + " for " + s.SubjectName);
+        }
     }
     
 }
