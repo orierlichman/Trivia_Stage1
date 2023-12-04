@@ -19,9 +19,52 @@ namespace Trivia_Stage1.UI
         //Implememnt interface here
         public bool ShowLogin()
         {
-            Console.WriteLine("Not implemented yet! Press any key to continue...");
-            Console.ReadKey(true);
-            return true;
+            this.currentPlayer = null;
+
+            char c = ' ';
+            while (c != 'B' && c != 'b' && this.currentPlayer == null)
+            {
+                CleareAndTtile("Login");
+
+                Console.Write("Please Type your email: ");
+                string email = Console.ReadLine();
+                while (!IsEmailValid(email))
+                {
+                    Console.Write("Bad Email Format! Please try again:");
+                    email = Console.ReadLine();
+                }
+
+                Console.Write("Please Type your password: ");
+                string password = Console.ReadLine();
+                while (!IsPasswordValid(password))
+                {
+                    Console.Write("password must be at least 4 characters! Please try again: ");
+                    password = Console.ReadLine();
+                }
+
+                try
+                {
+                    TriviaGamesDbContext db = new TriviaGamesDbContext();
+                    this.currentPlayer = db.Login(email, password);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                //Provide a proper message for example:
+                Console.WriteLine("Login is successed");
+                Console.WriteLine("Press (B)ack to go back ...");
+                //Get another input from user
+                c = Console.ReadKey(true).KeyChar;
+            }
+
+
+            //return true if login suceeded!
+            return (this.currentPlayer != null);
+
+
+           
         }
         public bool ShowSignup()
         {

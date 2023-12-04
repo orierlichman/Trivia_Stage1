@@ -22,4 +22,11 @@ public partial class TriviaGamesDbContext : DbContext
         this.SaveChanges();
         return player;
     }
+
+    public Player Login(string email, string password)
+    {
+        Player p = Players.Where(pp => pp.Email == email && pp.Password == password).FirstOrDefault();
+        return p;
+    }
+    
 }
