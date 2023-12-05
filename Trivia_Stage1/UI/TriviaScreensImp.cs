@@ -154,8 +154,19 @@ namespace Trivia_Stage1.UI
                 string wAnswer2 = Console.ReadLine();
                 Console.WriteLine("Enter wrong answer number 3");
                 string wAnswer3 = Console.ReadLine();
-            }
 
+                try
+                {
+                    Question X = db.AddQuestion(this.currentPlayer, Q, cAnswer, wAnswer1, wAnswer2, wAnswer3, S);
+                    Console.WriteLine("Question was added, and now pending");
+                    db.ResetScores();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                
+            }
 
             Console.WriteLine("Not implemented yet! Press any key to continue...");
             Console.ReadKey(true);

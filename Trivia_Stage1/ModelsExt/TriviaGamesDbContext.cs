@@ -50,5 +50,31 @@ public partial class TriviaGamesDbContext : DbContext
             Console.WriteLine("Enter " + s.SubjectId + " for " + s.SubjectName);
         }
     }
-    
+
+    public Question AddQuestion(Player p ,string question, string CorrectAns, string WrongAns1, string WrongAns2, string WrongAns3, int SubId)
+    {
+        Question Q = new Question();
+        {
+            Q.Question1 = question;
+            Q.CorrectAnswer = CorrectAns;
+            Q.WrongAnswer1 = WrongAns1;
+            Q.WrongAnswer2 = WrongAns2;
+            Q.WrongAnswer3 = WrongAns3;
+            Q.SubjectId = SubId;
+            Q.StatusId = 1;
+            Q.WriterId = p.PlayerId;
+        }
+        this.Questions.Add(Q);
+        this.SaveChanges();
+        return Q;
+    }
+
+    public void ResetScores()
+    {
+        foreach (Player player in this.Players)
+        {
+            player.Score = 0;
+        }
+    }
+
 }
