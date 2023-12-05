@@ -77,4 +77,41 @@ public partial class TriviaGamesDbContext : DbContext
         }
     }
 
+    public bool CheckForManager(Player p)
+    {
+        if (p.RankId == 1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+    public bool CheckForAcceptionEligible(Player p)
+    {
+        if (p.RankId != 3)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+    public void UpdatePlayer(Player p)
+    {
+        Entry(p).State = EntityState.Modified;
+        SaveChanges();
+    }
+
+
+    public void ShowQuestion(Question q)
+    {
+        Console.WriteLine("Question : " + q.Question1);
+        Console.WriteLine("Correct Answer : " + q.CorrectAnswer);
+        Console.WriteLine("Wrong Answer 1 : " + q.WrongAnswer1);
+        Console.WriteLine("Wrong Answer 2 : " + q.WrongAnswer2);
+        Console.WriteLine("Wrong Answer 3 : " + q.WrongAnswer3);
+        Console.WriteLine("Question Writer : " + (Players.Where(pp => pp.PlayerId == q.WriterId)).
+    }
+
 }

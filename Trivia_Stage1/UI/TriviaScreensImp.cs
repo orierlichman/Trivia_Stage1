@@ -174,6 +174,33 @@ namespace Trivia_Stage1.UI
 
         public void ShowPendingQuestions()
         {
+            TriviaGamesDbContext db = new TriviaGamesDbContext();
+            Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions");
+            int p = int.Parse(Console.ReadLine());
+            if (p == 2)
+            {
+                if (db.CheckForManager(this.currentPlayer) == false)
+                {
+                    Console.WriteLine("You are not eligible to run through In-Game questions");
+                }
+                else
+                {
+
+                }
+            }
+            if (p == 1)
+            {
+                if (db.CheckForAcceptionEligible(this.currentPlayer) == false)
+                {
+                    Console.WriteLine("You are not eligible check the pending questions");
+                }
+                else
+                {
+
+                }
+            }
+
+
             Console.WriteLine("Not implemented yet! Press any key to continue...");
             Console.ReadKey(true);
         }
@@ -184,8 +211,98 @@ namespace Trivia_Stage1.UI
         }
         public void ShowProfile()
         {
-            Console.WriteLine("Not implemented yet! Press any key to continue...");
-            Console.ReadKey(true);
+            char c = ' ';
+            while (c != 'B' && c != 'b')
+            {
+
+
+                Console.WriteLine("The Email : " + currentPlayer.Email);
+                Console.WriteLine("The Name : " + currentPlayer.Name);
+                Console.WriteLine("The Password : " + currentPlayer.Password);
+                Console.WriteLine("The Rank : " + currentPlayer.Rank.RankStatus);
+                Console.WriteLine("The Score : " + currentPlayer.Score);
+
+                Console.WriteLine("     ");
+
+                char ch;
+                Console.WriteLine("Press Y if you want to change something?");
+                Console.WriteLine("Press N if you dont want to change something?");
+                ch = char.Parse(Console.ReadLine());
+                bool playerUpdate = false;
+                if (ch == 'Y' || ch == 'y')
+                {
+                    int num;
+                    Console.WriteLine("Press 1 if you want to change name");
+                    Console.WriteLine("Press 2 if you want to change Email");
+                    Console.WriteLine("Press 3 if you want to change password");
+                    num = int.Parse(Console.ReadLine());
+                    while (num != 1 && num != 2 && num != 3)
+                    {
+                        Console.WriteLine("     ");
+
+                        Console.WriteLine("Press 1 if you want to change name");
+                        Console.WriteLine("Press 2 if you want to change Email");
+                        Console.WriteLine("Press 3 if you want to change password");
+                        num = int.Parse(Console.ReadLine());
+                    }
+                    if (num == 1)
+                    {
+                        string NewName;
+                        Console.WriteLine("enter new name");
+                        NewName = Console.ReadLine();
+                        while (!IsNameValid(NewName))
+                        {
+                            Console.Write("name must be at least 3 characters! Please try again: ");
+                            NewName = Console.ReadLine();
+                        }
+                        currentPlayer.Name = NewName;
+                        playerUpdate = true;
+                    }
+                    else if (num == 2)
+                    {
+                        string NewEmail;
+                        Console.WriteLine("enter new Email");
+                        NewEmail = Console.ReadLine();
+                        while (!IsEmailValid(NewEmail))
+                        {
+                            Console.Write("Bad Email Format! Please try again:");
+                            NewEmail = Console.ReadLine();
+                        }
+                        currentPlayer.Email = NewEmail;
+                        playerUpdate = true;
+                    }
+                    else if (num == 3)
+                    {
+                        string NewPass;
+                        Console.WriteLine("enter new password");
+                        NewPass = Console.ReadLine();
+                        while (!IsPasswordValid(NewPass))
+                        {
+                            Console.Write("password must be at least 4 characters! Please try again: ");
+                            NewPass = Console.ReadLine();
+                        }
+                        currentPlayer.Password = NewPass;
+                        playerUpdate = true;
+                    }
+                    if (playerUpdate == true)
+                    {
+                        try
+                        {
+                            TriviaGamesDbContext db = new TriviaGamesDbContext();
+                            db.UpdatePlayer(currentPlayer);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Failed to update player");
+                        }
+                    }
+
+                    Console.WriteLine("SAVE CHANGES!!! press B to back");
+                    Console.WriteLine("press any key to continue update");
+
+                    c = Console.ReadKey(true).KeyChar;
+                }
+            }
         }
 
         //Private helper methodfs down here...
