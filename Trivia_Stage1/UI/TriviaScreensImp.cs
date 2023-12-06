@@ -201,12 +201,71 @@ namespace Trivia_Stage1.UI
             }
 
 
-            Console.WriteLine("Not implemented yet! Press any key to continue...");
+            Console.WriteLine("Press any key to continue...");
             Console.ReadKey(true);
         }
         public void ShowGame()
         {
-            Console.WriteLine("Not implemented yet! Press any key to continue...");
+            TriviaGamesDbContext db = new TriviaGamesDbContext();
+            List<Question> approvedQuest = db.GetApprovedQuestions();
+            Random random = new Random();
+            int correct;
+            char c = ' ';
+            while (c != 'B' && c != 'b')
+            {
+                foreach (Question quest in approvedQuest)
+                {
+                    Console.WriteLine("the score : " + currentPlayer.Score);
+                    Console.WriteLine("#" + quest.QuestionId);
+                    Console.WriteLine(quest.Question1);
+                    
+                    correct = random.Next(1, 5);
+                    
+                    if (correct == 1)
+                    {
+                        Console.WriteLine("1. " + quest.CorrectAnswer);
+                        Console.WriteLine("2. " + quest.WrongAnswer1);
+                        Console.WriteLine("3. " + quest.WrongAnswer2);
+                        Console.WriteLine("4. " + quest.WrongAnswer3);
+                    }
+                    else if (correct == 2)
+                    {
+                        Console.WriteLine("1. " + quest.WrongAnswer1);
+                        Console.WriteLine("2. " + quest.CorrectAnswer);
+                        Console.WriteLine("3. " + quest.WrongAnswer2);
+                        Console.WriteLine("4. " + quest.WrongAnswer3);
+                    }
+                    else if (correct == 3)
+                    {
+                        Console.WriteLine("1. " + quest.WrongAnswer1);
+                        Console.WriteLine("2. " + quest.WrongAnswer2);
+                        Console.WriteLine("3. " + quest.CorrectAnswer);
+                        Console.WriteLine("4. " + quest.WrongAnswer3);
+                    }
+                    else if (correct == 4)
+                    {
+                        Console.WriteLine("1. " + quest.WrongAnswer1);
+                        Console.WriteLine("2. " + quest.WrongAnswer2);
+                        Console.WriteLine("3. " + quest.WrongAnswer3);
+                        Console.WriteLine("4. " + quest.CorrectAnswer);
+                    }
+                    int ans;
+                    Console.WriteLine("select the right answer");
+                    ans = int.Parse(Console.ReadLine());
+                    if(ans == correct)
+                    {
+                        Console.WriteLine("YOU RIGHT!!!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("YOU WRONG!!!");
+                    }
+
+                }
+            }
+
+
+                Console.WriteLine("Not implemented yet! Press any key to continue...");
             Console.ReadKey(true);
         }
         public void ShowProfile()
@@ -224,12 +283,11 @@ namespace Trivia_Stage1.UI
 
                 Console.WriteLine("     ");
 
-                char ch;
                 Console.WriteLine("Press Y if you want to change something?");
-                Console.WriteLine("Press N if you dont want to change something?");
-                ch = char.Parse(Console.ReadLine());
+                Console.WriteLine("Press B to come back");
+                c = Console.ReadKey(true).KeyChar;
                 bool playerUpdate = false;
-                if (ch == 'Y' || ch == 'y')
+                if (c == 'Y' || c == 'y')
                 {
                     int num;
                     Console.WriteLine("Press 1 if you want to change name");
@@ -296,10 +354,8 @@ namespace Trivia_Stage1.UI
                             Console.WriteLine("Failed to update player");
                         }
                     }
-
                     Console.WriteLine("SAVE CHANGES!!! press B to back");
                     Console.WriteLine("press any key to continue update");
-
                     c = Console.ReadKey(true).KeyChar;
                 }
             }
@@ -330,6 +386,8 @@ namespace Trivia_Stage1.UI
         {
             return name != null && name.Length >= 3;
         }
+
+
 
     }
 }
