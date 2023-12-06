@@ -174,29 +174,125 @@ namespace Trivia_Stage1.UI
 
         public void ShowPendingQuestions()
         {
+            char c = ' ';
             TriviaGamesDbContext db = new TriviaGamesDbContext();
-            Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions");
-            int p = int.Parse(Console.ReadLine());
-            if (p == 2)
-            {
-                if (db.CheckForManager(this.currentPlayer) == false)
-                {
-                    Console.WriteLine("You are not eligible to run through In-Game questions");
-                }
-                else
-                {
+            Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions" + "\n" + "Press B to go back");
 
-                }
-            }
-            if (p == 1)
+            c = Console.ReadKey(true).KeyChar;
+            while (c != 'b' || c != 'B')
             {
-                if (db.CheckForAcceptionEligible(this.currentPlayer) == false)
+                if (c == '2')
                 {
-                    Console.WriteLine("You are not eligible check the pending questions");
-                }
-                else
-                {
+                    if (db.CheckForManager(this.currentPlayer) == false)
+                    {
+                        Console.WriteLine("You are not eligible to run through In-Game questions");
+                    }
+                    else
+                    {
+                        foreach (Question q in db.Questions)
+                        {
+                            while (c != 'b' || c != 'B')
+                            {
+                                if (q.StatusId == 2)
+                                {
+                                    db.ShowQuestion1(q);
+                                    Console.WriteLine("If the question is OK with you press 1, if you want to eliminate the question press 2, if you want to update it press 3" + "\n" + "Press B to go back or N to check the next question");
+                                    c = Console.ReadKey(true).KeyChar;
+                                    if (c == 'n' || c == 'N' || c == '1')
+                                    {
 
+                                    }
+                                    else if (c == '2')
+                                    {
+                                        q.StatusId = 3;
+                                        try
+                                        {
+                                            db.UpdateQuestion(q);
+                                            Console.WriteLine("question eliminated");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
+                                    }
+                                    else if (c == '3')
+                                    {
+                                        Console.WriteLine("You chose to update the question, you can press B to go back or N to check the next question");
+                                        Console.WriteLine("Press 1 if you want to update the question itself");
+                                        Console.WriteLine("Press 2 if you want to update the correct answer");
+                                        Console.WriteLine("Press 3 if you want to update the first wrong answer");
+                                        Console.WriteLine("Press 4 if you want to update the second wrong answer");
+                                        Console.WriteLine("Press 5 if you want to update the third wrong answer");
+                                        c = Console.ReadKey(true).KeyChar;
+                                        if (c == 'n' || c == 'N' || c == 'b' || c == 'B')
+                                        {
+
+                                        }
+                                        else if(c == '1')
+                                        {
+                                            string NewQ;
+                                            Console.WriteLine("enter new question");
+                                            NewQ = Console.ReadLine();
+                                            q.Question1 = NewQ;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+                if (c == '1')
+                {
+                    if (db.CheckForAcceptionEligible(this.currentPlayer) == false)
+                    {
+                        Console.WriteLine("You are not eligible check the pending questions");
+                    }
+                    else
+                    {
+                        foreach (Question q in db.Questions)
+                        {
+                            while (c != 'b' || c != 'B')
+                            {
+                                if (q.StatusId == 1)
+                                {
+                                    db.ShowQuestion1(q);
+                                    Console.WriteLine("If you want to accept the question press 1, if you want to eliminate the question press 2" + "\n" + "Press B to go back or N to check the next question");
+                                    c = Console.ReadKey(true).KeyChar;
+                                    if (c == 'n' || c == 'N')
+                                    {
+
+                                    }
+                                    else if (c == '1')
+                                    {
+                                        q.StatusId = 2;
+                                        try
+                                        {
+                                            db.UpdateQuestion(q);
+                                            Console.WriteLine("question approved");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
+                                    }
+                                    else if (c == '2')
+                                    {
+                                        q.StatusId = 3;
+                                        try
+                                        {
+                                            db.UpdateQuestion(q);
+                                            Console.WriteLine("question eliminated");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

@@ -20,7 +20,7 @@ public partial class TriviaGamesDbContext : DbContext
         }
         this.Players.Add(player);
         this.SaveChanges();
-        return player;
+        return Login(player.Email, player.Password);
     }
 
     public Player Login(string email, string password)
@@ -103,15 +103,20 @@ public partial class TriviaGamesDbContext : DbContext
         SaveChanges();
     }
 
+    public void UpdateQuestion(Question q)
+    {
+        Entry(q).State = EntityState.Modified;
+        SaveChanges();
+    }
 
-    public void ShowQuestion(Question q)
+
+    public void ShowQuestion1(Question q)
     {
         Console.WriteLine("Question : " + q.Question1);
         Console.WriteLine("Correct Answer : " + q.CorrectAnswer);
         Console.WriteLine("Wrong Answer 1 : " + q.WrongAnswer1);
         Console.WriteLine("Wrong Answer 2 : " + q.WrongAnswer2);
         Console.WriteLine("Wrong Answer 3 : " + q.WrongAnswer3);
-        Console.WriteLine("Question Writer : " + (Players.Where(pp => pp.PlayerId == q.WriterId)).
     }
 
 }
