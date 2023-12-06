@@ -105,6 +105,11 @@ public partial class TriviaGamesDbContext : DbContext
         SaveChanges();
     }
 
+    public void UpdateQuestion(Question q)
+    {
+        Entry(q).State = EntityState.Modified;
+        SaveChanges();
+    }
 
     public void ShowQuestion1(Question q)
     {
