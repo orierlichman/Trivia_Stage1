@@ -311,11 +311,16 @@ namespace Trivia_Stage1.UI
             {
                 foreach (Question quest in approvedQuest)
                 {
+                    if (c == 'B' || c == 'b')
+                    {
+                        break;
+                    }
+
                     Console.WriteLine("the score : " + currentPlayer.Score);
-                    Console.WriteLine("#" + quest.QuestionId);
-                    Console.WriteLine(quest.Question1);
+                        Console.WriteLine("#" + quest.QuestionId);
+                        Console.WriteLine(quest.Question1);
                     
-                    correct = random.Next(1, 5);
+                        correct = random.Next(1, 5);
                     
                     if (correct == 1)
                     {
@@ -351,12 +356,14 @@ namespace Trivia_Stage1.UI
                     ans = int.Parse(Console.ReadLine());
                     if(ans == correct)
                     {
+                        CleareAndTtile("GAME");
                         Console.WriteLine("YOU RIGHT!!!");
                         currentPlayer.Score = currentPlayer.Score + 10;
                         playerUpdate = true;
                     }
                     else
                     {
+                        CleareAndTtile("GAME");
                         Console.WriteLine("YOU WRONG!!!");
                         currentPlayer.Score = currentPlayer.Score - 5;
                         playerUpdate = true;
@@ -371,16 +378,22 @@ namespace Trivia_Stage1.UI
                         {
                             Console.WriteLine("Failed to update player score");
                         }
+
+                        Console.WriteLine("press B to back!!!");
+                        Console.WriteLine("press any key to continue play!!!");
+                        c = Console.ReadKey(true).KeyChar;
+                        //c = char.Parse(Console.ReadLine());
+                        CleareAndTtile("GAME");
                     }
 
-
+                    
 
                 }
             }
 
 
-                Console.WriteLine("Not implemented yet! Press any key to continue...");
-            Console.ReadKey(true);
+            //    Console.WriteLine("Not implemented yet! Press any key to continue...");
+            //Console.ReadKey(true);
         }
         public void ShowProfile()
         {
@@ -403,6 +416,7 @@ namespace Trivia_Stage1.UI
                 bool playerUpdate = false;
                 if (c == 'Y' || c == 'y')
                 {
+                    CleareAndTtile("");
                     int num;
                     Console.WriteLine("Press 1 if you want to change name");
                     Console.WriteLine("Press 2 if you want to change Email");
