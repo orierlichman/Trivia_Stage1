@@ -345,17 +345,35 @@ namespace Trivia_Stage1.UI
                         Console.WriteLine("3. " + quest.WrongAnswer3);
                         Console.WriteLine("4. " + quest.CorrectAnswer);
                     }
+                    bool playerUpdate;
                     int ans;
                     Console.WriteLine("select the right answer");
                     ans = int.Parse(Console.ReadLine());
                     if(ans == correct)
                     {
                         Console.WriteLine("YOU RIGHT!!!");
+                        currentPlayer.Score = currentPlayer.Score + 10;
+                        playerUpdate = true;
                     }
                     else
                     {
                         Console.WriteLine("YOU WRONG!!!");
+                        currentPlayer.Score = currentPlayer.Score - 5;
+                        playerUpdate = true;
                     }
+                    if (playerUpdate == true)
+                    {
+                        try
+                        {
+                            db.UpdatePlayer(currentPlayer);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Failed to update player score");
+                        }
+                    }
+
+
 
                 }
             }
