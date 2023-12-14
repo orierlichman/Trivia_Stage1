@@ -134,42 +134,51 @@ namespace Trivia_Stage1.UI
         public void ShowAddQuestion()
         {
             TriviaGamesDbContext db = new TriviaGamesDbContext();
-            bool A = db.AddEligible(this.currentPlayer);
-            if (A == false)
+            char c = ' ';
+            while (c != 'b' || c != 'B')
             {
-                Console.WriteLine("You are not eligible to add a question !!");
-            }
-            else
-            {
-                Console.WriteLine("Choose question subject" + "\n");
-                foreach (Subject s in db.Subjects)
+                bool A = db.AddEligible(this.currentPlayer);
+                if (A == false)
                 {
-                    Console.WriteLine("Enter " + s.SubjectId + " for " + s.SubjectName);
+                    Console.WriteLine("You are not eligible to add a question !!");
+                    Console.WriteLine("press B to back!!!");
+                    c = Console.ReadKey(true).KeyChar;
                 }
-                int S = int.Parse(Console.ReadLine());
-                Console.WriteLine("Enter your question");
-                string Q = Console.ReadLine();
-                Console.WriteLine("Enter the correct answer");
-                string cAnswer = Console.ReadLine();
-                Console.WriteLine("Enter wrong answer number 1");
-                string wAnswer1 = Console.ReadLine();
-                Console.WriteLine("Enter wrong answer number 2");
-                string wAnswer2 = Console.ReadLine();
-                Console.WriteLine("Enter wrong answer number 3");
-                string wAnswer3 = Console.ReadLine();
+                else
+                {
+                    Console.WriteLine("Choose question subject" + "\n");
+                    foreach (Subject s in db.Subjects)
+                    {
+                        Console.WriteLine("Enter " + s.SubjectId + " for " + s.SubjectName);
+                    }
+                    int S = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter your question");
+                    string Q = Console.ReadLine();
+                    Console.WriteLine("Enter the correct answer");
+                    string cAnswer = Console.ReadLine();
+                    Console.WriteLine("Enter wrong answer number 1");
+                    string wAnswer1 = Console.ReadLine();
+                    Console.WriteLine("Enter wrong answer number 2");
+                    string wAnswer2 = Console.ReadLine();
+                    Console.WriteLine("Enter wrong answer number 3");
+                    string wAnswer3 = Console.ReadLine();
 
-                try
-                {
-                    Question X = db.AddQuestion(this.currentPlayer, Q, cAnswer, wAnswer1, wAnswer2, wAnswer3, S);
-                    Console.WriteLine("Question was added, and now pending");
-                    db.ResetScores();
+                    try
+                    {
+                        Question X = db.AddQuestion(this.currentPlayer, Q, cAnswer, wAnswer1, wAnswer2, wAnswer3, S);
+                        Console.WriteLine("Question was added, and now pending");
+                        db.ResetScores();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    Console.WriteLine("press B to back!!!");
+                    Console.WriteLine("press any key to continue add!!!");
+                    c = Console.ReadKey(true).KeyChar;
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                
             }
+            
 
             //Console.WriteLine("Not implemented yet! Press any key to continue...");
             //Console.ReadKey(true);
@@ -182,7 +191,6 @@ namespace Trivia_Stage1.UI
             while (c != 'b' || c != 'B')
             {
                 Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions" + "\n" + "press 3 if you want to add a question subject for the game" + "\n" + "Press B to go back");
-
                 c = Console.ReadKey(true).KeyChar;
                 while (c != 'b' || c != 'B' || c != 'F')
                 {
@@ -220,9 +228,10 @@ namespace Trivia_Stage1.UI
                                                     if (p.PlayerId == W)
                                                     {
                                                         p.NumOfQuestions--;
+                                                        db.UpdatePlayer(p);
                                                     }
                                                 }
-                                                db.UpdatePlayer(p);
+                                                
                                                 db.RankUpdator();
                                             }
                                             catch (Exception ex)
@@ -331,9 +340,10 @@ namespace Trivia_Stage1.UI
                                                     if (p.PlayerId == W)
                                                     {
                                                         p.NumOfQuestions++;
+                                                        db.UpdatePlayer(p);
                                                     }
                                                 }
-                                                db.UpdatePlayer(p);
+                                                
                                                 db.RankUpdator();
                                             }
                                             catch (Exception ex)
@@ -575,6 +585,7 @@ namespace Trivia_Stage1.UI
                     Console.WriteLine("SAVE CHANGES!!! press B to back");
                     Console.WriteLine("press any key to continue update");
                     c = Console.ReadKey(true).KeyChar;
+                    CleareAndTtile("");
                 }
             }
         }

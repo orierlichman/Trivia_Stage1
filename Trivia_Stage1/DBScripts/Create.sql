@@ -88,7 +88,6 @@ VALUES ('What is the boiling temprature of H2O ?', 4, 2, 1, '100', '95', '105', 
 INSERT INTO [Questions] ([Question], [SubjectId], [StatusId], [WriterId], [CorrectAnswer], [WrongAnswer1], [WrongAnswer2], [WrongAnswer3])
 VALUES ('Who is the best teacher in school ?', 5, 2, 1, 'Ofer Zadikario', 'Anat Bracha', 'Tali Shulk', 'Yoav Ben Aroya');
 
-SELECT * FROM Questions
 
 
 --scaffold-DbContext "Server = LAB2-10\SQLEXPRESS;Initial Catalog=TriviaGames;Integrated Security=True;Persist Security Info=False;Pooling=False;Multiple Active Result Sets=False;Encrypt=False;Trust Server Certificate=False;Command Timeout=0;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context TriviaGamesDbContext -DataAnnotations -force
