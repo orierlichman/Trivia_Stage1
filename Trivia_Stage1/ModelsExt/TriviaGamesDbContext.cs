@@ -105,6 +105,7 @@ public partial class TriviaGamesDbContext : DbContext
         foreach (Player player in this.Players)
         {
             player.Score = 0;
+            UpdatePlayer(player);
         }
     }
 

@@ -45,7 +45,14 @@ namespace Trivia_Stage1.UI
                 try
                 {
                     this.currentPlayer = db.Login(email, password);
-                    Console.WriteLine("Login is successed");
+                    if (this.currentPlayer != null)
+                    {
+                        Console.WriteLine("Login is successed");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Login failed");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -83,12 +90,10 @@ namespace Trivia_Stage1.UI
                 //Clear screen
                 CleareAndTtile("Signup");
 
-                string email;
-                bool z = null;
+                string email="";
+                bool z = false;
                 while (z != true)
                 {
-                    if (z == false)
-                        Console.WriteLine("Email was already exist");
                     Console.Write("Please Type your email: ");
                     email = Console.ReadLine();
                     while (!IsEmailValid(email))
@@ -150,14 +155,17 @@ namespace Trivia_Stage1.UI
         {
             TriviaGamesDbContext db = new TriviaGamesDbContext();
             char c = ' ';
-            while (c != 'b' || c != 'B')
+            while (c != 'b' && c != 'B')
             {
                 bool A = db.AddEligible(this.currentPlayer);
                 if (A == false)
                 {
                     Console.WriteLine("You are not eligible to add a question !!");
+                    Console.WriteLine("press anything to continue");
+                    c = Console.ReadKey(true).KeyChar;
                     c = 'b';
                 }
+
                 else
                 {
                     Console.WriteLine("Choose question subject" + "\n");
@@ -191,6 +199,7 @@ namespace Trivia_Stage1.UI
                     Console.WriteLine("press B to back or press any key to continue add");
                     c = Console.ReadKey(true).KeyChar;
                 }
+                
             }
             
 
@@ -202,25 +211,29 @@ namespace Trivia_Stage1.UI
         {
             char c = ' ';
             TriviaGamesDbContext db = new TriviaGamesDbContext();
-            while (c != 'b' || c != 'B')
+            while (c != 'b' && c != 'B')
             {
                 Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions");
                 Console.WriteLine("Press 3 if you want to add a question subject for the game");
                 Console.WriteLine("Press B to go back");
                 c = Console.ReadKey(true).KeyChar;
-                while (c != 'b' || c != 'B')
+                while (c != 'b' && c != 'B')
                 {
                     if (c == '2')
                     {
                         if (db.CheckForManager(this.currentPlayer) == false)
                         {
                             Console.WriteLine("You are not eligible to run through In-Game questions");
+                            Console.WriteLine("press anything to continue");
+                            c = Console.ReadKey(true).KeyChar;
+                            c = 'b';
+
                         }
                         else
                         {
                             foreach (Question q in db.Questions)
                             {
-                                while (c != 'b' || c != 'B')
+                                while (c != 'b' && c != 'B')
                                 {
                                     if (q.StatusId == 2)
                                     {
@@ -258,7 +271,7 @@ namespace Trivia_Stage1.UI
                                         }
                                         else if (c == '3')
                                         {
-                                            while (c != 'b' || c != 'B' || c == 'n' || c == 'N')
+                                            while (c != 'b' && c != 'B' && c == 'n' && c == 'N')
                                             {
                                                 Console.WriteLine("You chose to update the question, you can press B to go back or N to check the next question");
                                                 Console.WriteLine("Press 1 if you want to update the question itself");
@@ -328,12 +341,15 @@ namespace Trivia_Stage1.UI
                         if (db.CheckForAcceptionEligible(this.currentPlayer) == false)
                         {
                             Console.WriteLine("You are not eligible check the pending questions");
+                            Console.WriteLine("press anything to continue");
+                            c = Console.ReadKey(true).KeyChar;
+                            c = 'b';
                         }
                         else
                         {
                             foreach (Question q in db.Questions)
                             {
-                                while (c != 'b' || c != 'B')
+                                while (c != 'b' && c != 'B')
                                 {
                                     if (q.StatusId == 1)
                                     {
@@ -392,6 +408,9 @@ namespace Trivia_Stage1.UI
                         if (db.CheckForManager(this.currentPlayer) == false)
                         {
                             Console.WriteLine("You are not eligible to add a subject - only for managers");
+                            Console.WriteLine("press anything to continue");
+                            c = Console.ReadKey(true).KeyChar;
+                            c = 'b';
                         }
                         else
                         {
@@ -475,14 +494,29 @@ namespace Trivia_Stage1.UI
                     {
                         CleareAndTtile("GAME");
                         Console.WriteLine("YOU RIGHT!!!");
-                        currentPlayer.Score = currentPlayer.Score + 10;
+                        if (currentPlayer.Score > 90)
+                        {
+                            currentPlayer.Score = 100;
+                        }
+                        else
+                        {
+                            currentPlayer.Score = currentPlayer.Score + 10;
+
+                        }
                         playerUpdate = true;
                     }
                     else
                     {
                         CleareAndTtile("GAME");
                         Console.WriteLine("YOU WRONG!!!");
-                        currentPlayer.Score = currentPlayer.Score - 5;
+                        if(currentPlayer.Score < 5)
+                        {
+                            currentPlayer.Score = 0;
+                        }
+                        else
+                        {
+                            currentPlayer.Score = currentPlayer.Score - 5;
+                        }
                         playerUpdate = true;
                     }
                     if (playerUpdate == true)
