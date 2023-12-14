@@ -20,7 +20,7 @@ namespace Trivia_Stage1.UI
         public bool ShowLogin()
         {
             this.currentPlayer = null;
-
+            TriviaGamesDbContext db = new TriviaGamesDbContext();
             char c = ' ';
             while (c != 'B' && c != 'b' && this.currentPlayer == null)
             {
@@ -33,7 +33,7 @@ namespace Trivia_Stage1.UI
                     Console.Write("Bad Email Format! Please try again:");
                     email = Console.ReadLine();
                 }
-
+                
                 Console.Write("Please Type your password: ");
                 string password = Console.ReadLine();
                 while (!IsPasswordValid(password))
@@ -44,17 +44,17 @@ namespace Trivia_Stage1.UI
 
                 try
                 {
-                    TriviaGamesDbContext db = new TriviaGamesDbContext();
                     this.currentPlayer = db.Login(email, password);
+                    Console.WriteLine("Login is successed");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine("Login failed");
                 }
 
                 //Provide a proper message for example:
-                Console.WriteLine("Login is successed");
-                Console.WriteLine("Press (B)ack to go back ...");
+                Console.WriteLine("Press (B)ack to go back or any other key to try Login again");
                 //Get another input from user
                 c = Console.ReadKey(true).KeyChar;
             }
@@ -77,17 +77,33 @@ namespace Trivia_Stage1.UI
             //Loop through inputs until a user/player is created or 
             //user choose to go back to menu
             char c = ' ';
+            TriviaGamesDbContext db = new TriviaGamesDbContext();
             while (c != 'B' && c != 'b' && this.currentPlayer == null)
             {
                 //Clear screen
                 CleareAndTtile("Signup");
 
-                Console.Write("Please Type your email: ");
-                string email = Console.ReadLine();
-                while (!IsEmailValid(email))
+                string email;
+                bool z = null;
+                while (z != true)
                 {
-                    Console.Write("Bad Email Format! Please try again:");
+                    if (z == false)
+                        Console.WriteLine("Email was already exist");
+                    Console.Write("Please Type your email: ");
                     email = Console.ReadLine();
+                    while (!IsEmailValid(email))
+                    {
+                        Console.Write("Bad Email Format! Please try again:");
+                        email = Console.ReadLine();
+                    }
+                    z = true;
+                    foreach (Player p in db.Players)
+                    {
+                        if (p.Email == email)
+                        {
+                            z = false;
+                        }
+                    }
                 }
 
                 Console.Write("Please Type your password: ");
@@ -112,7 +128,6 @@ namespace Trivia_Stage1.UI
                  //For example:
                 try
                 {
-                    TriviaGamesDbContext db = new TriviaGamesDbContext();
                     this.currentPlayer = db.Signup(email, password, name);
                 }
                 catch (Exception ex)
@@ -141,8 +156,7 @@ namespace Trivia_Stage1.UI
                 if (A == false)
                 {
                     Console.WriteLine("You are not eligible to add a question !!");
-                    Console.WriteLine("press B to back!!!");
-                    c = Console.ReadKey(true).KeyChar;
+                    c = 'b';
                 }
                 else
                 {
@@ -173,8 +187,8 @@ namespace Trivia_Stage1.UI
                     {
                         Console.WriteLine(ex.Message);
                     }
-                    Console.WriteLine("press B to back!!!");
-                    Console.WriteLine("press any key to continue add!!!");
+
+                    Console.WriteLine("press B to back or press any key to continue add");
                     c = Console.ReadKey(true).KeyChar;
                 }
             }
@@ -190,9 +204,11 @@ namespace Trivia_Stage1.UI
             TriviaGamesDbContext db = new TriviaGamesDbContext();
             while (c != 'b' || c != 'B')
             {
-                Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions" + "\n" + "press 3 if you want to add a question subject for the game" + "\n" + "Press B to go back");
+                Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions");
+                Console.WriteLine("Press 3 if you want to add a question subject for the game");
+                Console.WriteLine("Press B to go back");
                 c = Console.ReadKey(true).KeyChar;
-                while (c != 'b' || c != 'B' || c != 'F')
+                while (c != 'b' || c != 'B')
                 {
                     if (c == '2')
                     {
@@ -209,7 +225,8 @@ namespace Trivia_Stage1.UI
                                     if (q.StatusId == 2)
                                     {
                                         db.ShowQuestion1(q);
-                                        Console.WriteLine("If the question is OK with you press 1, if you want to eliminate the question press 2, if you want to update it press 3" + "\n" + "Press B to go back or N to check the next question");
+                                        Console.WriteLine("If the question is OK with you press 1, if you want to eliminate the question press 2, if you want to update it press 3");
+                                        Console.WriteLine("Press B to go back or N to check the next question");
                                         c = Console.ReadKey(true).KeyChar;
                                         if (c == 'n' || c == 'N' || c == '1')
                                         {
@@ -321,7 +338,8 @@ namespace Trivia_Stage1.UI
                                     if (q.StatusId == 1)
                                     {
                                         db.ShowQuestion1(q);
-                                        Console.WriteLine("If you want to accept the question press 1, if you want to eliminate the question press 2" + "\n" + "Press B to go back or N to check the next question");
+                                        Console.WriteLine("If you want to accept the question press 1, if you want to eliminate the question press 2");
+                                        Console.WriteLine("Press B to go back or N to check the next question");
                                         c = Console.ReadKey(true).KeyChar;
                                         if (c == 'n' || c == 'N')
                                         {
@@ -388,7 +406,6 @@ namespace Trivia_Stage1.UI
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            c = 'F';
                         }
                     }
                 }

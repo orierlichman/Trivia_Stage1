@@ -27,7 +27,7 @@ public partial class TriviaGamesDbContext : DbContext
 
     public Player Login(string email, string password)
     {
-        Player? p = Players.Where(pp => pp.Email == email && pp.Password == password).Include(pp => pp.Rank).FirstOrDefault();
+        Player p = Players.Where(pp => pp.Email == email && pp.Password == password).Include(pp => pp.Rank).FirstOrDefault();
         return p;
     }
 
@@ -63,11 +63,7 @@ public partial class TriviaGamesDbContext : DbContext
 
     public bool AddEligible (Player p)
     {
-        if (p.RankId == 1)
-        {
-            return true;
-        }
-        else if (p.Score == 100)
+        if (p.RankId == 1 || p.Score == 100)
         {
             return true;
         }
