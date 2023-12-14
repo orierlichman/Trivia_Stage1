@@ -45,13 +45,6 @@ public partial class TriviaGamesDbContext : DbContext
         return false;
     }
 
-    public void ShowSubjects()
-    {
-        foreach (Subject s in this.Subjects)
-        {
-            Console.WriteLine("Enter " + s.SubjectId + " for " + s.SubjectName);
-        }
-    }
 
     public Question AddQuestion(Player p ,string question, string CorrectAns, string WrongAns1, string WrongAns2, string WrongAns3, int SubId)
     {
@@ -69,6 +62,17 @@ public partial class TriviaGamesDbContext : DbContext
         this.Questions.Add(Q);
         this.SaveChanges();
         return Q;
+    }
+
+    public Subject AddSubject (string sub)
+    {
+        Subject s = new Subject();
+        {
+            s.SubjectName = sub;
+        }
+        this.Subjects.Add(s);
+        this.SaveChanges();
+        return s;
     }
 
     public void ResetScores()

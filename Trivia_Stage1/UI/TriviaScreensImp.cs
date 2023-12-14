@@ -142,7 +142,10 @@ namespace Trivia_Stage1.UI
             else
             {
                 Console.WriteLine("Choose question subject" + "\n");
-                db.ShowSubjects();
+                foreach (Subject s in db.Subjects)
+                {
+                    Console.WriteLine("Enter " + s.SubjectId + " for " + s.SubjectName);
+                }
                 int S = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter your question");
                 string Q = Console.ReadLine();
@@ -176,121 +179,186 @@ namespace Trivia_Stage1.UI
         {
             char c = ' ';
             TriviaGamesDbContext db = new TriviaGamesDbContext();
-            Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions" + "\n" + "Press B to go back");
-
-            c = Console.ReadKey(true).KeyChar;
             while (c != 'b' || c != 'B')
             {
-                if (c == '2')
+                Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions" + "\n" + "press 3 if you want to add a question subject for the game" + "\n" + "Press B to go back");
+
+                c = Console.ReadKey(true).KeyChar;
+                while (c != 'b' || c != 'B' || c != 'F')
                 {
-                    if (db.CheckForManager(this.currentPlayer) == false)
+                    if (c == '2')
                     {
-                        Console.WriteLine("You are not eligible to run through In-Game questions");
-                    }
-                    else
-                    {
-                        foreach (Question q in db.Questions)
+                        if (db.CheckForManager(this.currentPlayer) == false)
                         {
-                            while (c != 'b' || c != 'B')
+                            Console.WriteLine("You are not eligible to run through In-Game questions");
+                        }
+                        else
+                        {
+                            foreach (Question q in db.Questions)
                             {
-                                if (q.StatusId == 2)
+                                while (c != 'b' || c != 'B')
                                 {
-                                    db.ShowQuestion1(q);
-                                    Console.WriteLine("If the question is OK with you press 1, if you want to eliminate the question press 2, if you want to update it press 3" + "\n" + "Press B to go back or N to check the next question");
-                                    c = Console.ReadKey(true).KeyChar;
-                                    if (c == 'n' || c == 'N' || c == '1')
+                                    if (q.StatusId == 2)
                                     {
-
-                                    }
-                                    else if (c == '2')
-                                    {
-                                        q.StatusId = 3;
-                                        try
-                                        {
-                                            db.UpdateQuestion(q);
-                                            Console.WriteLine("question eliminated");
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            Console.WriteLine(ex.Message);
-                                        }
-                                    }
-                                    else if (c == '3')
-                                    {
-                                        Console.WriteLine("You chose to update the question, you can press B to go back or N to check the next question");
-                                        Console.WriteLine("Press 1 if you want to update the question itself");
-                                        Console.WriteLine("Press 2 if you want to update the correct answer");
-                                        Console.WriteLine("Press 3 if you want to update the first wrong answer");
-                                        Console.WriteLine("Press 4 if you want to update the second wrong answer");
-                                        Console.WriteLine("Press 5 if you want to update the third wrong answer");
+                                        db.ShowQuestion1(q);
+                                        Console.WriteLine("If the question is OK with you press 1, if you want to eliminate the question press 2, if you want to update it press 3" + "\n" + "Press B to go back or N to check the next question");
                                         c = Console.ReadKey(true).KeyChar;
-                                        if (c == 'n' || c == 'N' || c == 'b' || c == 'B')
+                                        if (c == 'n' || c == 'N' || c == '1')
                                         {
 
                                         }
-                                        else if(c == '1')
+                                        else if (c == '2')
                                         {
-                                            string NewQ;
-                                            Console.WriteLine("enter new question");
-                                            NewQ = Console.ReadLine();
-                                            q.Question1 = NewQ;
+                                            q.StatusId = 3;
+                                            try
+                                            {
+                                                db.UpdateQuestion(q);
+                                                Console.WriteLine("question eliminated");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine(ex.Message);
+                                            }
+                                        }
+                                        else if (c == '3')
+                                        {
+                                            while (c != 'b' || c != 'B' || c == 'n' || c == 'N')
+                                            {
+                                                Console.WriteLine("You chose to update the question, you can press B to go back or N to check the next question");
+                                                Console.WriteLine("Press 1 if you want to update the question itself");
+                                                Console.WriteLine("Press 2 if you want to update the correct answer");
+                                                Console.WriteLine("Press 3 if you want to update the first wrong answer");
+                                                Console.WriteLine("Press 4 if you want to update the second wrong answer");
+                                                Console.WriteLine("Press 5 if you want to update the third wrong answer");
+                                                c = Console.ReadKey(true).KeyChar;
+                                                if (c == 'n' || c == 'N' || c == 'b' || c == 'B')
+                                                {
+
+                                                }
+                                                else if (c == '1')
+                                                {
+                                                    string NewQ;
+                                                    Console.WriteLine("enter new question");
+                                                    NewQ = Console.ReadLine();
+                                                    q.Question1 = NewQ;
+                                                }
+                                                else if (c == '2')
+                                                {
+                                                    string cAns;
+                                                    Console.WriteLine("enter new correct answer");
+                                                    cAns = Console.ReadLine();
+                                                    q.CorrectAnswer = cAns;
+                                                }
+                                                else if (c == '3')
+                                                {
+                                                    string wAns1;
+                                                    Console.WriteLine("enter the new first spot wrong answer");
+                                                    wAns1 = Console.ReadLine();
+                                                    q.WrongAnswer1 = wAns1;
+                                                }
+                                                else if (c == '4')
+                                                {
+                                                    string wAns2;
+                                                    Console.WriteLine("enter the new second spot wrong answer");
+                                                    wAns2 = Console.ReadLine();
+                                                    q.WrongAnswer2 = wAns2;
+                                                }
+                                                else if (c == '5')
+                                                {
+                                                    string wAns3;
+                                                    Console.WriteLine("enter the new third spot wrong answer");
+                                                    wAns3 = Console.ReadLine();
+                                                    q.WrongAnswer3 = wAns3;
+                                                }
+                                                try
+                                                {
+                                                    db.UpdateQuestion(q);
+                                                    Console.WriteLine("question got updated successfully - you can keep updating it");
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine(ex.Message);
+                                                }
+                                            }
                                         }
                                     }
-                                }
 
+                                }
                             }
                         }
                     }
-                }
-                if (c == '1')
-                {
-                    if (db.CheckForAcceptionEligible(this.currentPlayer) == false)
+                    if (c == '1')
                     {
-                        Console.WriteLine("You are not eligible check the pending questions");
-                    }
-                    else
-                    {
-                        foreach (Question q in db.Questions)
+                        if (db.CheckForAcceptionEligible(this.currentPlayer) == false)
                         {
-                            while (c != 'b' || c != 'B')
+                            Console.WriteLine("You are not eligible check the pending questions");
+                        }
+                        else
+                        {
+                            foreach (Question q in db.Questions)
                             {
-                                if (q.StatusId == 1)
+                                while (c != 'b' || c != 'B')
                                 {
-                                    db.ShowQuestion1(q);
-                                    Console.WriteLine("If you want to accept the question press 1, if you want to eliminate the question press 2" + "\n" + "Press B to go back or N to check the next question");
-                                    c = Console.ReadKey(true).KeyChar;
-                                    if (c == 'n' || c == 'N')
+                                    if (q.StatusId == 1)
                                     {
+                                        db.ShowQuestion1(q);
+                                        Console.WriteLine("If you want to accept the question press 1, if you want to eliminate the question press 2" + "\n" + "Press B to go back or N to check the next question");
+                                        c = Console.ReadKey(true).KeyChar;
+                                        if (c == 'n' || c == 'N')
+                                        {
 
-                                    }
-                                    else if (c == '1')
-                                    {
-                                        q.StatusId = 2;
-                                        try
-                                        {
-                                            db.UpdateQuestion(q);
-                                            Console.WriteLine("question approved");
                                         }
-                                        catch (Exception ex)
+                                        else if (c == '1')
                                         {
-                                            Console.WriteLine(ex.Message);
+                                            q.StatusId = 2;
+                                            try
+                                            {
+                                                db.UpdateQuestion(q);
+                                                Console.WriteLine("question approved");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine(ex.Message);
+                                            }
                                         }
-                                    }
-                                    else if (c == '2')
-                                    {
-                                        q.StatusId = 3;
-                                        try
+                                        else if (c == '2')
                                         {
-                                            db.UpdateQuestion(q);
-                                            Console.WriteLine("question eliminated");
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            Console.WriteLine(ex.Message);
+                                            q.StatusId = 3;
+                                            try
+                                            {
+                                                db.UpdateQuestion(q);
+                                                Console.WriteLine("question eliminated");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine(ex.Message);
+                                            }
                                         }
                                     }
                                 }
                             }
+                        }
+                    }
+                    if (c == '3')
+                    {
+                        if (db.CheckForManager(this.currentPlayer) == false)
+                        {
+                            Console.WriteLine("You are not eligible to add a subject - only for managers");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter your subject");
+                            string newSubject = Console.ReadLine();
+                            try
+                            {
+                                Subject X = db.AddSubject(newSubject);
+                                Console.WriteLine("Subject was added successfully");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            c = 'F';
                         }
                     }
                 }
@@ -300,6 +368,8 @@ namespace Trivia_Stage1.UI
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey(true);
         }
+
+
         public void ShowGame()
         {
             TriviaGamesDbContext db = new TriviaGamesDbContext();
