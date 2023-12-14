@@ -216,7 +216,8 @@ namespace Trivia_Stage1.UI
                 Console.WriteLine("Press 1 to check the pending questions, or press 2 to run through the In-Game questions");
                 Console.WriteLine("Press 3 if you want to add a question subject for the game");
                 Console.WriteLine("Press B to go back");
-                c = Console.ReadKey(true).KeyChar;
+                c = char.Parse(Console.ReadLine());
+                //c = Console.ReadKey(true).KeyChar;
                 while (c != 'b' && c != 'B')
                 {
                     if (c == '2')
@@ -240,7 +241,8 @@ namespace Trivia_Stage1.UI
                                         db.ShowQuestion1(q);
                                         Console.WriteLine("If the question is OK with you press 1, if you want to eliminate the question press 2, if you want to update it press 3");
                                         Console.WriteLine("Press B to go back or N to check the next question");
-                                        c = Console.ReadKey(true).KeyChar;
+                                        c = char.Parse(Console.ReadLine());
+                                        //c = Console.ReadKey(true).KeyChar;
                                         if (c == 'n' || c == 'N' || c == '1')
                                         {
 
@@ -427,6 +429,11 @@ namespace Trivia_Stage1.UI
                             }
                         }
                     }
+                    Console.WriteLine("press B to back!!!");
+                    Console.WriteLine("press any key to continue add!!!");
+                    c = Console.ReadKey(true).KeyChar;
+                    //c = char.Parse(Console.ReadLine());
+                    CleareAndTtile("Add subject");
                 }
             }
 
