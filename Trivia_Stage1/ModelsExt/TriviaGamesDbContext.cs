@@ -31,6 +31,35 @@ public partial class TriviaGamesDbContext : DbContext
         return p;
     }
 
+    public void RankUpdator()
+    {
+        foreach (Player p in this.Players)
+        {
+            if (p.RankId == 1 || p.RankId == 2 && p.NumOfQuestions > 9 || p.RankId == 3 && p.NumOfQuestions < 10)
+            {
+
+            }
+            else 
+            { 
+                if (p.NumOfQuestions > 9)
+                {
+                    p.RankId = 2;
+                }
+                else
+                {
+                    p.RankId = 3;
+                }
+            }
+            try
+            {
+                UpdatePlayer(p);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
 
     public bool AddEligible (Player p)
     {

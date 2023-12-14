@@ -171,8 +171,8 @@ namespace Trivia_Stage1.UI
                 
             }
 
-            Console.WriteLine("Not implemented yet! Press any key to continue...");
-            Console.ReadKey(true);
+            //Console.WriteLine("Not implemented yet! Press any key to continue...");
+            //Console.ReadKey(true);
         }
 
         public void ShowPendingQuestions()
@@ -214,6 +214,16 @@ namespace Trivia_Stage1.UI
                                             {
                                                 db.UpdateQuestion(q);
                                                 Console.WriteLine("question eliminated");
+                                                int W = q.WriterId;
+                                                foreach (Player p in db.Players)
+                                                {
+                                                    if (p.PlayerId == W)
+                                                    {
+                                                        p.NumOfQuestions--;
+                                                    }
+                                                }
+                                                db.UpdatePlayer(p);
+                                                db.RankUpdator();
                                             }
                                             catch (Exception ex)
                                             {
@@ -315,6 +325,16 @@ namespace Trivia_Stage1.UI
                                             {
                                                 db.UpdateQuestion(q);
                                                 Console.WriteLine("question approved");
+                                                int W = q.WriterId;
+                                                foreach (Player p in db.Players)
+                                                {
+                                                    if (p.PlayerId == W)
+                                                    {
+                                                        p.NumOfQuestions++;
+                                                    }
+                                                }
+                                                db.UpdatePlayer(p);
+                                                db.RankUpdator();
                                             }
                                             catch (Exception ex)
                                             {
@@ -365,8 +385,8 @@ namespace Trivia_Stage1.UI
             }
 
 
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey(true);
+            //Console.WriteLine("Press any key to continue...");
+            //Console.ReadKey(true);
         }
 
 
