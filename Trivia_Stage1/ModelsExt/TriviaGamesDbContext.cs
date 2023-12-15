@@ -105,14 +105,16 @@ public partial class TriviaGamesDbContext : DbContext
         foreach (Player player in this.Players)
         {
             player.Score = 0;
-            try
-            {
-                UpdatePlayer(player);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            UpdatePlayer(player);
+            SaveChanges();
+            //try
+            //{
+            //    UpdatePlayer(player);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
         }
     }
 

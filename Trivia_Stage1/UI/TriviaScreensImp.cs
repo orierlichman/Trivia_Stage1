@@ -227,7 +227,8 @@ namespace Trivia_Stage1.UI
                         {
                             Console.WriteLine("You are not eligible to run through In-Game questions");
                             Console.WriteLine("press anything to continue");
-                            Console.ReadKey(true).KeyChar;
+                        c = char.Parse(Console.ReadLine());
+                            //Console.ReadKey(true).KeyChar;
                         }
                         else
                         {
@@ -341,7 +342,8 @@ namespace Trivia_Stage1.UI
                         {
                             Console.WriteLine("You are not eligible check the pending questions");
                             Console.WriteLine("press anything to continue");
-                            Console.ReadKey(true).KeyChar;
+                            c = char.Parse(Console.ReadLine());
+                            //Console.ReadKey(true).KeyChar;
                         }
                         else
                         {
@@ -405,7 +407,8 @@ namespace Trivia_Stage1.UI
                         {
                             Console.WriteLine("You are not eligible to add a subject - only for managers");
                             Console.WriteLine("press anything to continue");
-                            Console.ReadKey(true).KeyChar;
+                            c = char.Parse(Console.ReadLine());
+                            //Console.ReadKey(true).KeyChar;
                         }
                         else
                         {
