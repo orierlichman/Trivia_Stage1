@@ -210,6 +210,8 @@ namespace Trivia_Stage1.UI
         public void ShowPendingQuestions()
         {
             char c = ' ';
+            char x = ' ';
+            char l = ' ';
             TriviaGamesDbContext db = new TriviaGamesDbContext();
             while (c != 'b' && c != 'B')
             {
@@ -218,36 +220,31 @@ namespace Trivia_Stage1.UI
                 Console.WriteLine("Press B to go back");
                 c = char.Parse(Console.ReadLine());
                 //c = Console.ReadKey(true).KeyChar;
-                while (c != 'b' && c != 'B')
-                {
+
                     if (c == '2')
                     {
                         if (db.CheckForManager(this.currentPlayer) == false)
                         {
                             Console.WriteLine("You are not eligible to run through In-Game questions");
                             Console.WriteLine("press anything to continue");
-                            c = Console.ReadKey(true).KeyChar;
-                            c = 'b';
-
+                            Console.ReadKey(true).KeyChar;
                         }
                         else
                         {
                             foreach (Question q in db.Questions)
                             {
-                                while (c != 'b' && c != 'B')
-                                {
-                                    if (q.StatusId == 2)
+                                    if (q.StatusId == 2 && x != 'b' && x != 'B')
                                     {
                                         db.ShowQuestion1(q);
                                         Console.WriteLine("If the question is OK with you press 1, if you want to eliminate the question press 2, if you want to update it press 3");
-                                        Console.WriteLine("Press B to go back or N to check the next question");
-                                        c = char.Parse(Console.ReadLine());
-                                        //c = Console.ReadKey(true).KeyChar;
-                                        if (c == 'n' || c == 'N' || c == '1')
+                                        Console.WriteLine("Press B to go back to the question screen or N to check the next question");
+                                        x = Console.ReadKey(true).KeyChar;
+                                        //x = char.Parse(Console.ReadLine());
+                                        if (x == 'n' || x == 'N' || x == '1')
                                         {
 
                                         }
-                                        else if (c == '2')
+                                        else if (x == '2')
                                         {
                                             q.StatusId = 3;
                                             try
@@ -271,50 +268,50 @@ namespace Trivia_Stage1.UI
                                                 Console.WriteLine(ex.Message);
                                             }
                                         }
-                                        else if (c == '3')
+                                        else if (x == '3')
                                         {
-                                            while (c != 'b' && c != 'B' && c == 'n' && c == 'N')
+                                            while (x != 'b' && x != 'B' && x == 'n' && x == 'N')
                                             {
-                                                Console.WriteLine("You chose to update the question, you can press B to go back or N to check the next question");
+                                                Console.WriteLine("You chose to update the question, you can press B to go back to question screen or N to check the next question");
                                                 Console.WriteLine("Press 1 if you want to update the question itself");
                                                 Console.WriteLine("Press 2 if you want to update the correct answer");
                                                 Console.WriteLine("Press 3 if you want to update the first wrong answer");
                                                 Console.WriteLine("Press 4 if you want to update the second wrong answer");
                                                 Console.WriteLine("Press 5 if you want to update the third wrong answer");
-                                                c = Console.ReadKey(true).KeyChar;
-                                                if (c == 'n' || c == 'N' || c == 'b' || c == 'B')
+                                                x = Console.ReadKey(true).KeyChar;
+                                                if (x == 'n' || x == 'N' || x == 'b' || x == 'B')
                                                 {
 
                                                 }
-                                                else if (c == '1')
+                                                else if (x == '1')
                                                 {
                                                     string NewQ;
                                                     Console.WriteLine("enter new question");
                                                     NewQ = Console.ReadLine();
                                                     q.Question1 = NewQ;
                                                 }
-                                                else if (c == '2')
+                                                else if (x == '2')
                                                 {
                                                     string cAns;
                                                     Console.WriteLine("enter new correct answer");
                                                     cAns = Console.ReadLine();
                                                     q.CorrectAnswer = cAns;
                                                 }
-                                                else if (c == '3')
+                                                else if (x == '3')
                                                 {
                                                     string wAns1;
                                                     Console.WriteLine("enter the new first spot wrong answer");
                                                     wAns1 = Console.ReadLine();
                                                     q.WrongAnswer1 = wAns1;
                                                 }
-                                                else if (c == '4')
+                                                else if (x == '4')
                                                 {
                                                     string wAns2;
                                                     Console.WriteLine("enter the new second spot wrong answer");
                                                     wAns2 = Console.ReadLine();
                                                     q.WrongAnswer2 = wAns2;
                                                 }
-                                                else if (c == '5')
+                                                else if (x == '5')
                                                 {
                                                     string wAns3;
                                                     Console.WriteLine("enter the new third spot wrong answer");
@@ -334,7 +331,7 @@ namespace Trivia_Stage1.UI
                                         }
                                     }
 
-                                }
+                                
                             }
                         }
                     }
@@ -344,26 +341,23 @@ namespace Trivia_Stage1.UI
                         {
                             Console.WriteLine("You are not eligible check the pending questions");
                             Console.WriteLine("press anything to continue");
-                            c = Console.ReadKey(true).KeyChar;
-                            c = 'b';
+                            Console.ReadKey(true).KeyChar;
                         }
                         else
                         {
                             foreach (Question q in db.Questions)
                             {
-                                while (c != 'b' && c != 'B')
-                                {
-                                    if (q.StatusId == 1)
+                                    if (q.StatusId == 1 && l != 'b' && l != 'B')
                                     {
                                         db.ShowQuestion1(q);
                                         Console.WriteLine("If you want to accept the question press 1, if you want to eliminate the question press 2");
-                                        Console.WriteLine("Press B to go back or N to check the next question");
-                                        c = Console.ReadKey(true).KeyChar;
-                                        if (c == 'n' || c == 'N')
+                                        Console.WriteLine("Press B to go back to the question screen or N to check the next question");
+                                        l = Console.ReadKey(true).KeyChar;
+                                        if (l == 'n' || l == 'N')
                                         {
 
                                         }
-                                        else if (c == '1')
+                                        else if (l == '1')
                                         {
                                             q.StatusId = 2;
                                             try
@@ -387,7 +381,7 @@ namespace Trivia_Stage1.UI
                                                 Console.WriteLine(ex.Message);
                                             }
                                         }
-                                        else if (c == '2')
+                                        else if (l == '2')
                                         {
                                             q.StatusId = 3;
                                             try
@@ -401,7 +395,7 @@ namespace Trivia_Stage1.UI
                                             }
                                         }
                                     }
-                                }
+                                
                             }
                         }
                     }
@@ -411,8 +405,7 @@ namespace Trivia_Stage1.UI
                         {
                             Console.WriteLine("You are not eligible to add a subject - only for managers");
                             Console.WriteLine("press anything to continue");
-                            c = Console.ReadKey(true).KeyChar;
-                            c = 'b';
+                            Console.ReadKey(true).KeyChar;
                         }
                         else
                         {
@@ -420,7 +413,7 @@ namespace Trivia_Stage1.UI
                             string newSubject = Console.ReadLine();
                             try
                             {
-                                Subject X = db.AddSubject(newSubject);
+                                Subject Sub = db.AddSubject(newSubject);
                                 Console.WriteLine("Subject was added successfully");
                             }
                             catch (Exception ex)
@@ -429,12 +422,6 @@ namespace Trivia_Stage1.UI
                             }
                         }
                     }
-                    Console.WriteLine("press B to back!!!");
-                    Console.WriteLine("press any key to continue add!!!");
-                    c = Console.ReadKey(true).KeyChar;
-                    //c = char.Parse(Console.ReadLine());
-                    CleareAndTtile("Add subject");
-                }
             }
 
 
