@@ -106,7 +106,7 @@ public partial class TriviaGamesDbContext : DbContext
         {
             player.Score = 0;
             UpdatePlayer(player);
-            SaveChanges();
+            this.SaveChanges();
             //try
             //{
             //    UpdatePlayer(player);
@@ -140,14 +140,39 @@ public partial class TriviaGamesDbContext : DbContext
 
     public void UpdatePlayer(Player p)
     {
-        Entry(p).State = EntityState.Modified;
-        SaveChanges();
+        foreach(Player player in this.Players)
+        {
+            if (player.PlayerId == p.PlayerId)
+            {
+                player.Name = p.Name;
+                player.Email = p.Email;
+                player.Password = p.Password;
+                player.Score = p.Score;
+                player.RankId = p.RankId;
+                player.NumOfQuestions = p.NumOfQuestions;
+            }
+        }
+        //Entry(p).State = EntityState.Modified;
+        this.SaveChanges();
     }
 
     public void UpdateQuestion(Question q)
     {
-        Entry(q).State = EntityState.Modified;
-        SaveChanges();
+        foreach (Question quest in this.Questions)
+        {
+            if (quest.QuestionId == q.QuestionId)
+            {
+                quest.Question1 = q.Question1;
+                quest.CorrectAnswer = q.CorrectAnswer;
+                quest.WrongAnswer1 = q.WrongAnswer1;
+                quest.WrongAnswer2 = q.WrongAnswer2;
+                quest.WrongAnswer3 = q.WrongAnswer3;
+                quest.StatusId = q.StatusId;
+                quest.SubjectId = q.SubjectId;
+            }
+        }
+        //Entry(q).State = EntityState.Modified;
+        this.SaveChanges();
     }
 
     public void ShowQuestion1(Question q)
