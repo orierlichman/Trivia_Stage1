@@ -50,14 +50,7 @@ public partial class TriviaGamesDbContext : DbContext
                     p.RankId = 3;
                 }
             }
-            try
-            {
-                UpdatePlayer(p);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            UpdatePlayer(p);
         }
     }
 
@@ -126,41 +119,39 @@ public partial class TriviaGamesDbContext : DbContext
     }
 
 
-    public void UpdatePlayer(Player p)
+    public void UpdatePlayer(Player updatedPlayer)
     {
-        //foreach(Player player in this.Players)
-        //{
-        //    if (player.PlayerId == p.PlayerId)
-        //    {
-        //        player.Name = p.Name;
-        //        player.Email = p.Email;
-        //        player.Password = p.Password;
-        //        player.Score = p.Score;
-        //        player.RankId = p.RankId;
-        //        player.NumOfQuestions = p.NumOfQuestions;
-        //    }
-        //}
-        Entry(p).State = EntityState.Modified;
-        this.SaveChanges();
+        Player existingPlayer = this.Players.FirstOrDefault(p => p.PlayerId == updatedPlayer.PlayerId);
+
+        if (existingPlayer != null)
+        {
+            // Update the properties of the existing player
+            Entry(existingPlayer).CurrentValues.SetValues(updatedPlayer);
+
+            // Mark the entity as modified
+            Entry(existingPlayer).State = EntityState.Modified;
+
+            // Save changes to the database
+            this.SaveChanges();
+        }
     }
 
-    public void UpdateQuestion(Question q)
+    public void UpdateQuestion(Question updatedQuestion)
     {
-        //foreach (Question quest in this.Questions)
-        //{
-        //    if (quest.QuestionId == q.QuestionId)
-        //    {
-        //        quest.Question1 = q.Question1;
-        //        quest.CorrectAnswer = q.CorrectAnswer;
-        //        quest.WrongAnswer1 = q.WrongAnswer1;
-        //        quest.WrongAnswer2 = q.WrongAnswer2;
-        //        quest.WrongAnswer3 = q.WrongAnswer3;
-        //        quest.StatusId = q.StatusId;
-        //        quest.SubjectId = q.SubjectId;
-        //    }
-        //}
-        Entry(q).State = EntityState.Modified;
-        this.SaveChanges();
+            // Retrieve the existing question entity from the context
+            Question existingQuestion = this.Questions.FirstOrDefault(q => q.QuestionId == updatedQuestion.QuestionId);
+
+            if (existingQuestion != null)
+            {
+                // Update the properties of the existing question
+                Entry(existingQuestion).CurrentValues.SetValues(updatedQuestion);
+
+                // Mark the entity as modified
+                Entry(existingQuestion).State = EntityState.Modified;
+
+                // Save changes to the database
+                this.SaveChanges();
+            }
     }
 
     public void ShowQuestion1(Question q)
