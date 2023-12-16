@@ -33,7 +33,8 @@ public partial class TriviaGamesDbContext : DbContext
 
     public void RankUpdator()
     {
-        foreach (Player p in this.Players)
+        List<Player> players = this.Players.ToList();
+        foreach (Player p in players)
         {
             if (p.RankId == 1 || p.RankId == 2 && p.NumOfQuestions > 9 || p.RankId == 3 && p.NumOfQuestions < 10)
             {
@@ -119,39 +120,44 @@ public partial class TriviaGamesDbContext : DbContext
     }
 
 
-    public void UpdatePlayer(Player updatedPlayer)
+    public void UpdatePlayer(Player p)
     {
-        Player existingPlayer = this.Players.FirstOrDefault(p => p.PlayerId == updatedPlayer.PlayerId);
+        Entry(p).State = EntityState.Modified;
+        this.SaveChanges();
 
-        if (existingPlayer != null)
-        {
-            // Update the properties of the existing player
-            Entry(existingPlayer).CurrentValues.SetValues(updatedPlayer);
+        //Player existingPlayer = this.Players.FirstOrDefault(p => p.PlayerId == updatedPlayer.PlayerId);
+        //if (existingPlayer != null)
+        //{
+        //    // Update the properties of the existing player
+        //    Entry(existingPlayer).CurrentValues.SetValues(updatedPlayer);
 
-            // Mark the entity as modified
-            Entry(existingPlayer).State = EntityState.Modified;
+        //    // Mark the entity as modified
+        //    Entry(existingPlayer).State = EntityState.Modified;
 
-            // Save changes to the database
-            this.SaveChanges();
-        }
+        //    // Save changes to the database
+        //    this.SaveChanges();
+        //}
     }
 
-    public void UpdateQuestion(Question updatedQuestion)
+    public void UpdateQuestion(Question q)
     {
-            // Retrieve the existing question entity from the context
-            Question existingQuestion = this.Questions.FirstOrDefault(q => q.QuestionId == updatedQuestion.QuestionId);
+        Entry(q).State = EntityState.Modified;
+        this.SaveChanges();
 
-            if (existingQuestion != null)
-            {
-                // Update the properties of the existing question
-                Entry(existingQuestion).CurrentValues.SetValues(updatedQuestion);
 
-                // Mark the entity as modified
-                Entry(existingQuestion).State = EntityState.Modified;
+        // Retrieve the existing question entity from the context
+        //Question existingQuestion = this.Questions.FirstOrDefault(q => q.QuestionId == updatedQuestion.QuestionId);
+        //if (existingQuestion != null)
+        //{
+        //    // Update the properties of the existing question
+        //    Entry(existingQuestion).CurrentValues.SetValues(updatedQuestion);
 
-                // Save changes to the database
-                this.SaveChanges();
-            }
+        //    // Mark the entity as modified
+        //    Entry(existingQuestion).State = EntityState.Modified;
+
+        //    // Save changes to the database
+        //    this.SaveChanges();
+        //}
     }
 
     public void ShowQuestion1(Question q)

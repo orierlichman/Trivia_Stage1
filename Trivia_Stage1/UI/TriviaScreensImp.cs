@@ -191,7 +191,8 @@ namespace Trivia_Stage1.UI
                         
                         Question X = db.AddQuestion(this.currentPlayer, Q, cAnswer, wAnswer1, wAnswer2, wAnswer3, S);
                         Console.WriteLine("Question was added, and now pending");
-                        foreach(Player p in db.Players)
+                        List<Player> players = db.Players.ToList();
+                        foreach (Player p in players)
                         {
                             db.ResetScore(p);
                         }
@@ -232,12 +233,13 @@ namespace Trivia_Stage1.UI
                         {
                             Console.WriteLine("You are not eligible to run through In-Game questions");
                             Console.WriteLine("press anything to continue");
-                        c = char.Parse(Console.ReadLine());
+                            c = char.Parse(Console.ReadLine());
                             //Console.ReadKey(true).KeyChar;
                         }
                         else
                         {
-                            foreach (Question q in db.Questions)
+                            List<Question> questions = db.Questions.ToList();
+                            foreach (Question q in questions)
                             {
                                     if (q.StatusId == 2 && x != 'b' && x != 'B')
                                     {
@@ -258,7 +260,8 @@ namespace Trivia_Stage1.UI
                                                 db.UpdateQuestion(q);
                                                 Console.WriteLine("question eliminated");
                                                 int W = q.WriterId;
-                                                foreach (Player p in db.Players)
+                                                List<Player> players = db.Players.ToList();
+                                                foreach (Player p in players)
                                                 {
                                                     if (p.PlayerId == W)
                                                     {
@@ -352,7 +355,8 @@ namespace Trivia_Stage1.UI
                         }
                         else
                         {
-                            foreach (Question q in db.Questions)
+                        List<Question> questions = db.Questions.ToList();
+                        foreach (Question q in questions)
                             {
                                     if (q.StatusId == 1 && l != 'b' && l != 'B')
                                     {
@@ -372,7 +376,8 @@ namespace Trivia_Stage1.UI
                                                 db.UpdateQuestion(q);
                                                 Console.WriteLine("question approved");
                                                 int W = q.WriterId;
-                                                foreach (Player p in db.Players)
+                                                List<Player> players = db.Players.ToList();
+                                                foreach (Player p in players)
                                                 {
                                                     if (p.PlayerId == W)
                                                     {
