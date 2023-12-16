@@ -189,7 +189,10 @@ namespace Trivia_Stage1.UI
                     {
                         Question X = db.AddQuestion(this.currentPlayer, Q, cAnswer, wAnswer1, wAnswer2, wAnswer3, S);
                         Console.WriteLine("Question was added, and now pending");
-                        db.ResetScores();
+                        for(int r = 0; r < db.Players.Count; r++)
+                        {
+                            db.ResetScore(db.Players[r]);
+                        }
                     }
                     catch (Exception ex)
                     {

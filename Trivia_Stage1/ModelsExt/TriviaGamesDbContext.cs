@@ -100,22 +100,10 @@ public partial class TriviaGamesDbContext : DbContext
         return s;
     }
 
-    public void ResetScores()
+    public void ResetScore(Player p)
     {
-        foreach (Player player in this.Players)
-        {
-            player.Score = 0;
-            UpdatePlayer(player);
-            this.SaveChanges();
-            //try
-            //{
-            //    UpdatePlayer(player);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
-        }
+        p.Score = 0;
+        UpdatePlayer(p);
     }
 
     public bool CheckForManager(Player p)
@@ -140,38 +128,38 @@ public partial class TriviaGamesDbContext : DbContext
 
     public void UpdatePlayer(Player p)
     {
-        foreach(Player player in this.Players)
-        {
-            if (player.PlayerId == p.PlayerId)
-            {
-                player.Name = p.Name;
-                player.Email = p.Email;
-                player.Password = p.Password;
-                player.Score = p.Score;
-                player.RankId = p.RankId;
-                player.NumOfQuestions = p.NumOfQuestions;
-            }
-        }
-        //Entry(p).State = EntityState.Modified;
+        //foreach(Player player in this.Players)
+        //{
+        //    if (player.PlayerId == p.PlayerId)
+        //    {
+        //        player.Name = p.Name;
+        //        player.Email = p.Email;
+        //        player.Password = p.Password;
+        //        player.Score = p.Score;
+        //        player.RankId = p.RankId;
+        //        player.NumOfQuestions = p.NumOfQuestions;
+        //    }
+        //}
+        Entry(p).State = EntityState.Modified;
         this.SaveChanges();
     }
 
     public void UpdateQuestion(Question q)
     {
-        foreach (Question quest in this.Questions)
-        {
-            if (quest.QuestionId == q.QuestionId)
-            {
-                quest.Question1 = q.Question1;
-                quest.CorrectAnswer = q.CorrectAnswer;
-                quest.WrongAnswer1 = q.WrongAnswer1;
-                quest.WrongAnswer2 = q.WrongAnswer2;
-                quest.WrongAnswer3 = q.WrongAnswer3;
-                quest.StatusId = q.StatusId;
-                quest.SubjectId = q.SubjectId;
-            }
-        }
-        //Entry(q).State = EntityState.Modified;
+        //foreach (Question quest in this.Questions)
+        //{
+        //    if (quest.QuestionId == q.QuestionId)
+        //    {
+        //        quest.Question1 = q.Question1;
+        //        quest.CorrectAnswer = q.CorrectAnswer;
+        //        quest.WrongAnswer1 = q.WrongAnswer1;
+        //        quest.WrongAnswer2 = q.WrongAnswer2;
+        //        quest.WrongAnswer3 = q.WrongAnswer3;
+        //        quest.StatusId = q.StatusId;
+        //        quest.SubjectId = q.SubjectId;
+        //    }
+        //}
+        Entry(q).State = EntityState.Modified;
         this.SaveChanges();
     }
 
