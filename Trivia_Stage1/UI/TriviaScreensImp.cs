@@ -196,7 +196,8 @@ namespace Trivia_Stage1.UI
                         {
                             db.ResetScore(p);
                         }
-                        this.currentPlayer = db.Players.Where(pp => pp.PlayerId == this.currentPlayer.PlayerId);
+                        this.currentPlayer.Score = 0;
+                        db.UpdatePlayer(this.currentPlayer);
                     }
                     catch (Exception ex)
                     {
