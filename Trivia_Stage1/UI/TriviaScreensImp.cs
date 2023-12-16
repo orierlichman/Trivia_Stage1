@@ -279,7 +279,7 @@ namespace Trivia_Stage1.UI
                                         }
                                         else if (x == '3')
                                         {
-                                            while (x != 'b' && x != 'B' && x == 'n' && x == 'N')
+                                            while (x != 'b' && x != 'B' && x != 'n' && x != 'N')
                                             {
                                                 Console.WriteLine("You chose to update the question, you can press B to go back to question screen or N to check the next question");
                                                 Console.WriteLine("Press 1 if you want to update the question itself");
