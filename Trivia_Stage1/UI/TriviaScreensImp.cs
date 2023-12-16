@@ -157,7 +157,7 @@ namespace Trivia_Stage1.UI
             char c = ' ';
             while (c != 'b' && c != 'B')
             {
-                TriviaGamesDbContext db = new TriviaGamesDbContext();
+                
                 bool A = db.AddEligible(this.currentPlayer);
                 if (A == false)
                 {
@@ -188,12 +188,12 @@ namespace Trivia_Stage1.UI
 
                     try
                     {
-                        TriviaGamesDbContext data = new TriviaGamesDbContext();
-                        Question X = data.AddQuestion(this.currentPlayer, Q, cAnswer, wAnswer1, wAnswer2, wAnswer3, S);
+                        
+                        Question X = db.AddQuestion(this.currentPlayer, Q, cAnswer, wAnswer1, wAnswer2, wAnswer3, S);
                         Console.WriteLine("Question was added, and now pending");
-                        foreach(Player p in data.Players)
+                        foreach(Player p in db.Players)
                         {
-                            data.ResetScore(p);
+                            db.ResetScore(p);
                         }
                     }
                     catch (Exception ex)
